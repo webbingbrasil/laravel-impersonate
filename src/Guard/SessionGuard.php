@@ -16,7 +16,9 @@ class SessionGuard extends BaseSessionGuard
     public function quietLogin(Authenticatable $user)
     {
         $this->updateSession($user->getAuthIdentifier());
-
+        $this->session->put([
+            'password_hash_' . $this->name => $user->getAuthPassword()
+        ]);
         $this->setUser($user);
     }
 
